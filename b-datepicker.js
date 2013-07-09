@@ -1103,14 +1103,14 @@
             ch2 = field.tagName.toLowerCase();
 
             if (
-                ch2 == 'input' &&
-                ch2 == 'button' &&
-                ch2 == 'select' &&
+                ch2 == 'input' ||
+                ch2 == 'button' ||
+                ch2 == 'select' ||
                 ch2 == 'textarea'
             ) {
-                this._dom.property = 'value';
+                this._dom.value = 'value';
             } else {
-                this._dom.property = 'innerHTML';
+                this._dom.value = 'innerHTML';
             }
         }
 
@@ -1812,10 +1812,27 @@
      */
     DatePicker.prototype._select = function() {
         this.self(this._data.tmp);
-
+        this.pub();
         delete this._data.tmp;
 
-        this.pub();
+        if (this.shown) {
+            this._draw();
+        }
+
+        if (this._conf.fill_field !== false) {
+            this.fill(this._data.self);
+        }
+    }
+
+    /**
+     * 
+     *
+     * @this   {DatePicker}
+     * @param  {undefined|string|Date}
+     * @return {this}
+     */
+    DatePicker.prototype.preselect = function(point) {
+        this.self(point);
 
         if (this.shown) {
             this._draw();
@@ -1835,7 +1852,7 @@
      */
     DatePicker.prototype.fill = function(val) {
         if (this._dom.field) {
-            this._dom.field[this._dom.property] = HumanDate.human(val, this._conf.tmpl_field);
+            this._dom.field[this._dom.value] = HumanDate.human(val, this._conf.tmpl_field);
         }
 
         return this;
@@ -1849,8 +1866,17 @@
      * @return {null|Date}
      */
     DatePicker.prototype.self = function(self) {
+        var
+            raw = null;
+
         if (self !== undefined) {
-            this._data.self = HumanDate.parse(self);
+            raw = HumanDate.parse(self);
+
+            this._data.self = new Date(
+                raw.getFullYear(),
+                raw.getMonth(),
+                raw.getDate()
+            );
         }
 
         return this._data.self ? this._data.self : null;
@@ -1864,8 +1890,17 @@
      * @return {null|Date}
      */
     DatePicker.prototype.that = function(that) {
+        var
+            raw = null;
+
         if (that !== undefined) {
-            this._data.that = HumanDate.parse(that);
+            raw = HumanDate.parse(that);
+
+            this._data.that = new Date(
+                raw.getFullYear(),
+                raw.getMonth(),
+                raw.getDate()
+            );
         }
 
         return this._data.that ? this._data.that : null;
@@ -2041,6 +2076,7 @@
 
         // Iterate through subscribed calendars
         for (al0 in this.subscribed) {
+            ch0   = false;
             way   = this.subscribed[al0];
             child = DatePicker.installed[al0];
             that  = child.self();
@@ -2094,6 +2130,7 @@
             this.that(that);
             child.that(self);
             child.fill(that);
+            child.seek(that);
         }
 
         return this;
