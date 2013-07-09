@@ -1484,6 +1484,9 @@
         if (this._conf.text_bwd) {
             this._dom.bwd.innerHTML = this._conf.text_bwd;
         }
+
+        this._dom.bwd.title = HumanDate.locales[HumanDate.locales.curr].
+                              common.bwd;
     }
 
     /**
@@ -1513,6 +1516,9 @@
         if (this._conf.text_fwd) {
             this._dom.bwd.innerHTML = this._conf.text_fwd;
         }
+
+        this._dom.fwd.title = HumanDate.locales[HumanDate.locales.curr].
+                              common.fwd;
     }
 
     /**
