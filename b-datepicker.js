@@ -889,17 +889,17 @@
             raw = null;
 
         // Set the main properties
-        this._blur      = true;
-        this.shown      = false;
-        this.id         = DatePicker.last + 1;
-        this._dom       = {};
-        this._conf      = {};
-        this._data      = {};
-        this._prox      = {};
-        this._funcs     = {};
-        this._range     = {};
-        this._timers    = {};
-        this.subscribed = {};
+        this._blur       = true;
+        this.shown       = false;
+        this.id          = DatePicker.last + 1;
+        this._dom        = {};
+        this._conf       = {};
+        this._data       = {};
+        this._prox       = {};
+        this._funcs      = {};
+        this._range      = {};
+        this._timers     = {};
+        this.subscribers = {};
 
         // Cache the link to this datepicker instance
         DatePicker.installed[this.id] = this;
@@ -986,7 +986,7 @@
         );
 
         // Unset the window resize event handler
-        if (!this._conf.auto_position_off && this._dom.field) {
+        if (this._conf.auto_position === false && this._dom.field) {
             window[method](
                 prefix + 'resize',
                 this._prox.route
@@ -1048,7 +1048,7 @@
         }
 
         // Set the default template for calendar input
-        if (!this._conf.tmpl_input && !this._conf.auto_position_off) {
+        if (!this._conf.tmpl_input && this._conf.auto_position === false) {
             this._conf.tmpl_input = 'd M';
         }
 
@@ -1102,7 +1102,7 @@
         } else if (ch1 === 'object') {
             field = this._dom.field = this._conf.dom_field;
         } else {
-            this._conf.auto_position_off = true;
+            this._conf.auto_position = false;
         }
 
         // Decide what property use to get and set the field value
@@ -1234,7 +1234,7 @@
         );
 
         // Set the window resize event handler
-        if (!this._conf.auto_position_off && this._dom.field) {
+        if (this._conf.auto_position === false && this._dom.field) {
             window[method](
                 prefix + 'resize',
                 this._prox.route
@@ -1744,7 +1744,10 @@
         this._data.days  = HumanDate.api(raw);
         this._data.day   = raw.getDate();
 
-        this._draw();
+        // Redraw the calendar
+        if (this.shown) {
+            this._draw();
+        }
 
         // Run the user given seek handler
         if (this._funcs.seek) {
@@ -2037,7 +2040,7 @@
             woff = null;
 
         //
-        if (!this._conf.auto_position_off && this._dom.field) {
+        if (this._conf.auto_position !== false && this._dom.field) {
             woff = {
                 width  : doc.offsetWidth,
                 height : doc.offsetHeight
@@ -2084,9 +2087,9 @@
             child = null;
 
         // Iterate through subscribed calendars
-        for (al0 in this.subscribed) {
+        for (al0 in this.subscribers) {
             ch0   = false;
-            way   = this.subscribed[al0];
+            way   = this.subscribers[al0];
             child = DatePicker.installed[al0];
             that  = child.self();
 
@@ -2273,13 +2276,11 @@
      *
      * @this   {DatePicker}
      * @param  {number|string}
+     * @param  {string}
      * @param  {number|string}
-     * @param  {undefined|string}
      * @return {undefined}
      */
-    DatePicker.sub = function(child, parent, way) {
-        way = way || '=';
-
+    DatePicker.sub = function(child, way, parent) {
         var
             ways = {
                 '=' : true,
@@ -2292,7 +2293,7 @@
             DatePicker.installed[parent] &&
             ways[way]
         ) {
-            DatePicker.installed[parent].subscribed[child] = way;
+            DatePicker.installed[parent].subscribers[child] = way;
         }
     }
 
@@ -2311,7 +2312,7 @@
             DatePicker.installed[child] &&
             DatePicker.installed[parent]
         ) {
-            delete DatePicker.installed[parent].subscribed[child];
+            delete DatePicker.installed[parent].subscribers[child];
         }
     }
 
