@@ -799,7 +799,7 @@
 
                 //
                 for (al1 in def[al0]) {
-                    if (items && items[als] && items[als][al1]) {
+                    if (items && items[al0] && items[al0][al1]) {
                         if (items[al0][al1] instanceof Array) {
                             HumanDate.locales[lang][al0][al1] = items[al0][al1].join(HumanDate.sep);
                         } else {
@@ -837,7 +837,7 @@
 
 
 /**
- * Customized calendar/datepicker control
+ * Customized Calendar/Datepicker control
  *
  * @author   Shushik <silkleopard@yandex.ru>
  * @version  2.0
@@ -920,6 +920,13 @@
         // Clone the user given handlers
         for (al0 in funcs) {
             this._funcs[al0] = funcs[al0];
+        }
+
+        // Save the language settings
+        if (conf.dictionaries) {
+            for (al0 in conf.dictionaries) {
+                this.lang(al0, conf.dictionaries[al0]);
+            }
         }
 
         // Do the rest
@@ -1825,21 +1832,17 @@
     }
 
     /**
-     * 
+     * Set or switch a language
      *
      * @this   {DatePicker}
      * @param  {undefined|string|Date}
      * @return {this}
      */
-    DatePicker.prototype.preselect = function(point) {
-        this.self(point);
+    DatePicker.prototype.lang = function(lang, items) {
+        HumanDate.language(lang, items);
 
         if (this.shown) {
             this._draw();
-        }
-
-        if (this._conf.fill_field !== false) {
-            this.fill(this._data.self);
         }
     }
 
