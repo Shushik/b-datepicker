@@ -837,7 +837,7 @@
 
 
 /**
- * Customized Calendar/Datepicker control
+ * Customized calendar/datepicker control
  *
  * @author   Shushik <silkleopard@yandex.ru>
  * @version  2.0
