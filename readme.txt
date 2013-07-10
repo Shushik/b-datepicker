@@ -98,70 +98,70 @@
 
     DatePicker instance methods:
 
-     method          | description
+     method      | description
     ==========================================================================
-     bwd()           | Show the previous month.
+     bwd()       | Show the previous month.
     --------------------------------------------------------------------------
-     fwd()           | Show the next month.
+     fwd()       | Show the next month.
     --------------------------------------------------------------------------
-     max()           | Set the maximal date in the calendar range.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     max()       | Set the maximal date in the calendar range.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     min()           | Set the minimal date in the calendar range.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     min()       | Set the minimal date in the calendar range.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     now()           | Set the current date in the calendar range.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     now()       | Set the current date in the calendar range.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     init()          | DatePicker initialization.
-                     |
-                     | Takes two arguments:
-                     | — user defined handlers as object;
-                     | — instance settings as object.
+     init()      | DatePicker initialization.
+                 |
+                 | Takes two arguments:
+                 | — user defined handlers as object;
+                 | — instance settings as object.
     --------------------------------------------------------------------------
-     fill()          | Fill the attached field with the value.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     fill()      | Fill the attached field with the value.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     hide()          | Hide the calendar.
+     hide()      | Hide the calendar.
     --------------------------------------------------------------------------
-     lang()          | Switch the language to default or any set in the
-                     | instance settings object. Or set a new one.
-                     |
-                     | Takes two arguments:
-                     | — two-letter language alias (en, ru, ua, etc...);
-                     | — calendar elements translations as object (optional).
+     lang()      | Switch the language to default or any set in the
+                 | instance settings object. Or set a new one.
+                 |
+                 | Takes two arguments:
+                 | — two-letter language alias (en, ru, ua, etc...);
+                 | — calendar elements translations as object (optional).
     --------------------------------------------------------------------------
-     seek()          | Move calendar to a needed date.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     seek()      | Move calendar to a needed date.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     show()          | Show the calendar.
+     show()      | Show the calendar.
     --------------------------------------------------------------------------
-     place()         | Set the DOM top and left styles manually or using
-                     | the stylesheet.
-                     |
-                     | Takes one argument:
-                     | — top and left position in pixels as object without
-                     |   «px» in the end (optional).
+     place()     | Set the DOM top and left styles manually or using
+                 | the stylesheet.
+                 |
+                 | Takes one argument:
+                 | — top and left position in pixels as object without
+                 |   «px» in the end (optional).
     --------------------------------------------------------------------------
-     reset()         | Remove all selections and return the calendar instance
-                     | into default state.
+     reset()     | Remove all selections and return the calendar instance
+                 | into default state.
     --------------------------------------------------------------------------
-     select()        | Select a date in the calendar.
-                     |
-                     | Takes one argument:
-                     | — date as number, string or Date object.
+     select()    | Select a date in the calendar.
+                 |
+                 | Takes one argument:
+                 | — date as number, string or Date object.
     --------------------------------------------------------------------------
-     uninstall()     | Remove the calendar instance.
+     uninstall() | Remove the calendar instance.
     ==========================================================================
 
 

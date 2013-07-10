@@ -140,20 +140,13 @@
 
     border-color: #424242;
 }
-/*
-
-body .b-datepicker .b-datepicker__range,
-body .b-datepicker .b-datepicker__range:hover
-{
-    color:        #666;
-    background:   #B4D5FF;
-}
-*/
 
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_enabled,
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_enabled:hover
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_holiday,
-.b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_holiday:hover
+.b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_holiday:hover,
+.b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_in_past.b-datepicker__day_is_enabled:hover,
+.b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_in_future.b-datepicker__day_is_enabled:hover
 {
     background:   #B4D5FF;
     color:        #666;
