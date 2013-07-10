@@ -763,6 +763,7 @@
             ch3  = this._data.that ?
                    this._data.that :
                    null,
+            ch4  = ch2 ? ch2.toString() : '',
             max  = new Date(
                        this._data.year,
                        this._data.month + 1,
@@ -806,7 +807,8 @@
             // Check if a date was selected
             if (
                 HumanDate.inside(now, ch2, ch3, true) ||
-                HumanDate.inside(now, ch3, ch2, true)
+                HumanDate.inside(now, ch3, ch2, true) ||
+                ch0 == ch4
             ) {
                 node.className += ' b-datepicker__day_is_selected';
             }
@@ -1575,7 +1577,7 @@
 ;function
     HumanDate(tmpl, raw) {
         return HumanDate.human(HumanDate.parse(raw), tmpl);
-    }; HumanDate.prototype = {};
+    };
 
     /**
      * The current date
