@@ -758,11 +758,11 @@
                        this._range.now.getDate()
                    ).toString(),
             ch2  = this._data.self ?
-                   this._data.self.toString() :
-                   '',
+                   this._data.self :
+                   null,
             ch3  = this._data.that ?
-                   this._data.that.toString() :
-                   '',
+                   this._data.that :
+                   null,
             max  = new Date(
                        this._data.year,
                        this._data.month + 1,
@@ -805,8 +805,8 @@
 
             // Check if a date was selected
             if (
-                now == ch2 ||
-                now == ch3
+                HumanDate.inside(now, ch2, ch3, true) ||
+                HumanDate.inside(now, ch3, ch2, true)
             ) {
                 node.className += ' b-datepicker__day_is_selected';
             }
@@ -2019,13 +2019,16 @@
      * Parse a date
      *
      * @this   {HumanDate}
-     * @param  {number|string|date}
-     * @return {Date}
+     * @param  {number|string|Date}
+     * @return {Date|null}
      */
     HumanDate.parse = HumanDate.prototype.parse = function(raw) {
-        // Don`t parse, just clone
         if (raw instanceof Date) {
+            // Don`t parse, just clone
             return new Date(raw);
+        } else if (raw === undefined) {
+            // Don`t parse, return the current day
+            return HumanDate._now;
         }
 
         var
@@ -2075,7 +2078,7 @@
             }
         }
 
-        return HumanDate._now;
+        return null;
     }
 
     /**
@@ -2202,15 +2205,19 @@
      * @param  {number|string|Date}
      * @param  {number|string|Date}
      * @param  {number|string|Date}
+     * @param  {undefined|boolean}
      * @return {boolean}
      */
-    HumanDate.inside = HumanDate.prototype.inside = function(now, min, max) {
+    HumanDate.inside = HumanDate.prototype.inside = function(now, min, max, inc) {
         var
             cmax = HumanDate.parse(max),
             cmin = HumanDate.parse(min),
             cnow = HumanDate.parse(now);
 
-        if (cnow > cmin && cnow < cmax) {
+        if (
+            inc && cnow >= cmin && cnow <= cmax ||
+            cnow > cmin && cnow < cmax
+        ) {
             return true;
         }
 
