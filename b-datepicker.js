@@ -765,6 +765,7 @@
                    this._data.that :
                    null,
             ch4  = ch2 ? ch2.toString() : '',
+            ch5  = ch3 ? ch3.toString() : '',
             max  = new Date(
                        this._data.year,
                        this._data.month + 1,
@@ -809,7 +810,8 @@
             if (
                 ch2 && ch3 && HumanDate.inside(now, ch2, ch3, true) ||
                 ch2 && ch3 && HumanDate.inside(now, ch3, ch2, true) ||
-                ch0 == ch4
+                ch0 == ch4 ||
+                ch0 == ch5
             ) {
                 node.className += ' b-datepicker__day_is_selected';
             }
