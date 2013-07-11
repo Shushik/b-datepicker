@@ -87,7 +87,7 @@
         // Save the language settings
         if (conf.dictionaries) {
             for (al0 in conf.dictionaries) {
-                this.lang(al0, conf.dictionaries[al0]);
+                HumanDate.language(al0, conf.dictionaries[al0]);
             }
         }
 
@@ -227,11 +227,12 @@
      * @return {undefined}
      */
     DatePicker.prototype._setup4prox = function() {
-        this._prox.hide   = this._proxy(this.hide,    this);
-        this._prox.show   = this._proxy(this.snow,    this);
-        this._prox.place  = this._proxy(this.place,   this);
-        this._prox.route  = this._proxy(this._route,  this);
-        this._prox.select = this._proxy(this._select, this);
+        this._prox.hide     = this._proxy(this.hide,      this);
+        this._prox.show     = this._proxy(this.snow,      this);
+        this._prox.place    = this._proxy(this.place,     this);
+        this._prox.route    = this._proxy(this._route,    this);
+        this._prox.select   = this._proxy(this._select,   this);
+        this._prox.deselect = this._proxy(this._deselect, this);
     }
 
     /**
@@ -806,8 +807,8 @@
 
             // Check if a date was selected
             if (
-                HumanDate.inside(now, ch2, ch3, true) ||
-                HumanDate.inside(now, ch3, ch2, true) ||
+                ch2 && ch3 && HumanDate.inside(now, ch2, ch3, true) ||
+                ch2 && ch3 && HumanDate.inside(now, ch3, ch2, true) ||
                 ch0 == ch4
             ) {
                 node.className += ' b-datepicker__day_is_selected';
@@ -992,7 +993,7 @@
      */
     DatePicker.prototype._select = function() {
         this.self(this._data.tmp);
-        this.pub();
+        this._pub();
         delete this._data.tmp;
 
         if (this.shown) {
@@ -1005,14 +1006,39 @@
     }
 
     /**
-     * Set or switch a language
+     * Remove the selection
      *
      * @this   {DatePicker}
-     * @param  {undefined|string|Date}
      * @return {this}
      */
-    DatePicker.prototype.lang = function(lang, items) {
-        HumanDate.language(lang, items);
+    DatePicker.prototype.deselect = function() {
+        // Run a user given select handler
+        if (this._funcs.deselect) {
+            if (this._conf.async_selection) {
+                this._funcs.deselect({
+                    done : this._prox.deselect,
+                    hide : this._prox.hide
+                });
+            } else {
+                this._funcs.select(HumanDate.parse(point));
+                this._deselect();
+            }
+        } else {
+            this._deselect();
+        }
+    }
+
+    /**
+     * Finish the deselection
+     *
+     * @private
+     *
+     * @this   {DatePicker}
+     * @return {undefined}
+     */
+    DatePicker.prototype._deselect = function() {
+        this._unpub();
+        this.self(null);
 
         if (this.shown) {
             this._draw();
@@ -1045,7 +1071,9 @@
         var
             raw = null;
 
-        if (self !== undefined) {
+        if (self === null) {
+            this._data.self = null;
+        } else if (self !== undefined) {
             raw = HumanDate.parse(self);
 
             this._data.self = new Date(
@@ -1069,7 +1097,9 @@
         var
             raw = null;
 
-        if (that !== undefined) {
+        if (that === null) {
+            this._data.that = null;
+        } else if (that !== undefined) {
             raw = HumanDate.parse(that);
 
             this._data.that = new Date(
@@ -1236,10 +1266,12 @@
     /**
      * Publish for saved subscriptions
      *
+     * @private
+     *
      * @this   {DatePicker}
      * @return {this}
      */
-    DatePicker.prototype.pub = function() {
+    DatePicker.prototype._pub = function() {
         var
             al0   = '',
             way   = '',
@@ -1310,6 +1342,24 @@
         }
 
         return this;
+    }
+
+    /**
+     * Remove this calendar selection from the subscribed calendars
+     *
+     * @private
+     *
+     * @this   {DatePicker}
+     * @return {undefined}
+     */
+    DatePicker.prototype._unpub = function() {
+        var
+            al0 = '';
+
+        // Iterate through subscribed calendars
+        for (al0 in this.subscribers) {
+            DatePicker.installed[al0].that(null);
+        }
     }
 
     /**
@@ -2313,8 +2363,10 @@
      */
     HumanDate.holidays = HumanDate.prototype.holidays = function(lang, items) {
         var
-            ln0 = 0,
-            raw = null;
+            ln0  = 0,
+            raw  = null,
+            from = null,
+            till = null;
 
         if (items !== undefined) {
             raw = typeof items == 'string' ?
