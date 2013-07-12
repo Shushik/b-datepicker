@@ -33,7 +33,7 @@
      param           | value
     ==========================================================================
      dom_id          | Id string which will be saved as
-                     | .b-datepicker_id_{{ dom_id }} className.
+                     | b-datepicker_id_{{ dom_id }} className.
     --------------------------------------------------------------------------
      text_bwd        | InnerHTML for the left arrow.
     --------------------------------------------------------------------------
@@ -59,6 +59,16 @@
     --------------------------------------------------------------------------
      tmpl_field      | Template for the attached field value.
     --------------------------------------------------------------------------
+     dictionaries    | Language settings. Should be given as an object with
+                     | the following structure:
+                     | {
+                     |     'ru' : {...},
+                     |     'ua' : {...},
+                     |     'kz' : {...}
+                     | }
+                     |
+                     | The full list of language settings see below.
+    --------------------------------------------------------------------------
      auto_position   | False if you want to set the calendar position
                      | manually.
     --------------------------------------------------------------------------
@@ -68,18 +78,59 @@
     ==========================================================================
 
 
+    Language settings list:
+
+    (each value can be an array or a string separated with
+    the HumanDate.sep property)
+
+     param    | value
+    ==========================================================================
+     ampm     | Localized ante meridiem and post meridiem date part.
+              |
+              | Contains the following keys:
+              | — full  — full spelling (ante meridiem, post meridiem);
+              | — lower — lowercased short spelling (am, pm);
+              | — upper — uppercased short spelling (AM, PM).
+    --------------------------------------------------------------------------
+     common   | Common settings for the datepicker controls.
+              |
+              | Contains the following keys:
+              | — bwd  — text for the bwd control title;
+              | — fwd  — text for the fwd control title;
+              | — hide — text for the hide control.
+    --------------------------------------------------------------------------
+     monthes  | Localized monthes names.
+              |
+              | Contains the following keys:
+              | — decl — declensioned month names (of December, of November);
+              | — full — full name month names (December, November);
+              | — part — Three letter month names (Dec, Nov).
+    --------------------------------------------------------------------------
+     holidays | List of holidays in Y-m-d format.
+    --------------------------------------------------------------------------
+     weekdays | Localized weekdays names.
+              |
+              | Contains the following keys:
+              | — motu — two letter weekday name (Mo, Tu);
+              | — full — full weekday name (Monday, Tuesday);
+              | — part — Three letter weekday name (Mon, Tue).
+    ==========================================================================
+
+
     User defined handlers list:
 
-     handler   | runs when
+     handler     | runs when
     ==========================================================================
-     .hide()   | The calendar is hiding.
+     hide()      | The calendar is hiding.
     --------------------------------------------------------------------------
-     .seek()   | The calendar is switching between the monthes.
+     seek()      | The calendar is switching between the monthes.
     --------------------------------------------------------------------------
-     .show()   | The calendar is showing.
+     show()      | The calendar is showing.
     --------------------------------------------------------------------------
-     .select() | Some date in the calendar is selected before the selection
-               | was made.
+     select()    | Some date in the calendar is selected before the
+                 | selection was made.
+    --------------------------------------------------------------------------
+     deselect () | The date selection in calendar is removing.
     ==========================================================================
 
 

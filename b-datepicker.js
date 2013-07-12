@@ -18,7 +18,7 @@
         if (arguments.length) {
             this.init(funcs, conf);
         }
-    };
+    }
 
     /**
      * Common regular expressions
@@ -794,34 +794,39 @@
             node.className = 'b-datepicker__day';
             node.innerHTML = day;
 
-            // Check if a date belongs to a current month
+            // Set the future or the past indicators
             if (now > max) {
                 node.className += ' b-datepicker__day_in_future';
             } else if (now < min) {
                 node.className += ' b-datepicker__day_in_past';
             }
 
-            // Check if a date is holiday (or weekend)
+            // Mark the holidays
             if (HumanDate.holiday(now)) {
                 node.className += ' b-datepicker__day_is_holiday';
             }
 
-            // Check if a date was selected
-            if (
-                ch2 && ch3 && HumanDate.inside(now, ch2, ch3, true) ||
-                ch2 && ch3 && HumanDate.inside(now, ch3, ch2, true) ||
-                ch0 == ch4 ||
-                ch0 == ch5
-            ) {
+            // Select the range points
+            if (ch0 == ch4 || ch0 == ch5) {
                 node.className += ' b-datepicker__day_is_selected';
             }
 
-            // Check if a date is today
+            // Make the range selection
+            if (ch2 && ch3) {
+                if (
+                    HumanDate.inside(now, ch2, ch3, true) ||
+                    HumanDate.inside(now, ch3, ch2, true)
+                ) {
+                    node.className += ' b-datepicker__day_in_range';
+                }
+            }
+
+            // Mark today
             if (ch0 == ch1) {
                 node.className += ' b-datepicker__day_is_today';
             }
 
-            // Check if a date belongs to a calendar range
+            // Activate or deactivate the day
             if (HumanDate.inside(now, this._range.min, this._range.max)) {
                 node.className += ' b-datepicker__day_is_enabled';
 
@@ -1703,7 +1708,8 @@
                 plur : 'day;days;days'
             },
             years : {
-                plur : 'year;years;years'
+                leap : 'is leap',
+                plur : 'year;years;years',
             },
             common : {
                 bwd  : 'Go back',
@@ -1716,16 +1722,16 @@
                 part : 'Jan;Feb;Mar;Apr;May;Jun;Jul;Aug;Sep;Oct;Nov;Dec',
                 plur : 'month;monthes;monthes'
             },
+            holidays : {
+                list : '',
+                from : null,
+                till : null
+            },
             weekdays : {
                 motu : 'Mo;Tu;We;Th;Fr;Sa;Su',
                 full : 'Monday;Tuesday;Wednesday;Thursday;Friday;Saturday;Sunday',
                 part : 'Mon;Tue;Wen;Thu;Fri;Sat;Sun',
                 plur : 'week;weeks;weeks'
-            },
-            holidays : {
-                list : '',
-                from : null,
-                till : null
             }
         },
         def : 'en',
