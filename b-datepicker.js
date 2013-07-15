@@ -814,8 +814,8 @@
             // Make the range selection
             if (ch2 && ch3) {
                 if (
-                    HumanDate.inside(now, ch2, ch3, true) ||
-                    HumanDate.inside(now, ch3, ch2, true)
+                    HumanDate.inside(now, ch2, ch3) ||
+                    HumanDate.inside(now, ch3, ch2)
                 ) {
                     node.className += ' b-datepicker__day_in_range';
                 }

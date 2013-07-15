@@ -141,6 +141,18 @@
     border-color: #424242;
 }
 
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_is_enabled,
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_is_enabled:hover,
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_is_holiday,
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_is_holiday:hover,
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_in_past.b-datepicker__day_is_enabled:hover,
+.b-datepicker .b-datepicker__day_in_range.b-datepicker__day_in_future.b-datepicker__day_is_enabled:hover
+{
+    background:   #9DB8D9;
+    color:        #666;
+    border-color: #9DB8D9;
+}
+
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_enabled,
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_enabled:hover
 .b-datepicker .b-datepicker__day_is_selected.b-datepicker__day_is_holiday,
