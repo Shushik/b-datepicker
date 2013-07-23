@@ -12,6 +12,116 @@
 
 
 
+    Example 1 (syncronous datepicker):
+
+    <code>
+        <input id="date">
+
+        <script type="text/javascript">
+            var
+                today  = new Date(),
+                picker = new DatePicker(
+                    {
+                        select : function(data) {
+                            console.log(data);
+                        }
+                    },
+                    {
+                        dom_field : document.getElementById('date')
+                    }
+                );
+
+            picker.select(today);
+        </script>
+    </code>
+
+
+    Example 2 (asyncronous datepicker):
+
+    <code>
+        <input id="date">
+
+        <script type="text/javascript">
+            var
+                today  = new Date(),
+                picker = new DatePicker(
+                    {
+                        select : function(data, fn) {
+                            console.log(data);
+                            fn.done();
+                            fn.hide();
+                        }
+                    },
+                    {
+                        dom_field       : document.getElementById('date'),
+                        async_selection : true
+                    }
+                );
+
+            picker.select(today);
+        </script>
+    </code>
+
+
+    Example 3 (without the input usage):
+
+    <code>
+        <script type="text/javascript">
+            var
+                today  = new Date(),
+                picker = new DatePicker(
+                    {
+                        select : function(data) {
+                            console.log(data);
+                        }
+                    },
+                    {}
+                );
+
+            picker.select(today);
+            picker.show();
+        </script>
+    </code>
+
+
+    Example 4 (subscribe two datepickers to each other):
+
+    <code>
+        <input id="from"> — <input id="till">
+
+        <script type="text/javascript">
+            var
+                today = new Date(),
+                till  = new DatePicker(
+                    {
+                        select : function(data) {
+                            console.log(data);
+                        }
+                    },
+                    {
+                        dom_field : document.getElementById('till'),
+                    }
+                ),
+                from  = new DatePicker(
+                    {
+                        select : function(data) {
+                            console.log(data);
+                        }
+                    },
+                    {
+                        dom_field : document.getElementById('from'),
+                    }
+                );
+
+            DatePicker.sub('from', '<', 'till');
+            DatePicker.sub('till', '>', 'from');
+
+            from.select(today);
+        </script>
+    </code>
+
+
+
     Requirements:
 
     — JavaScript.
@@ -55,7 +165,7 @@
                      | (document.body by the default).
     --------------------------------------------------------------------------
      fill_field      | False if the attached field should not be filled
-                     | by a selected date.
+                     | with a selected date.
     --------------------------------------------------------------------------
      tmpl_field      | Template for the attached field value.
     --------------------------------------------------------------------------

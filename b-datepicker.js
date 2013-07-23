@@ -1873,32 +1873,32 @@
      */
     HumanDate.preg = HumanDate.prototype.preg = function(tmpl) {
         var
-            end   = tmpl.length,
-            pos   = 0,
-            cp    = '',
-            als   = '',
+            it0   = 0,
+            ln0   = tmpl.length,
+            al0   = '',
+            al1   = '',
             pregs = HumanDate._formats.pregs;
 
         //
-        for (pos = 0; pos < end; pos++) {
-            als = tmpl[pos];
+        for (it0 = 0; it0 < ln0; it0++) {
+            al0 = tmpl[it0];
 
-            if (pregs[als]) {
-                cp += pregs[als]
+            if (pregs[al0]) {
+                al1 += pregs[al0]
             } else {
-                cp += tmpl[pos];
+                al1 += tmpl[it0];
             }
         }
 
-        return new RegExp(cp, 'g');
+        return new RegExp(al1, 'g');
     }
 
     /**
      * Get a number string with a leading zero
      *
      * @this   {HumanDate}
-     * @param  {Number}
-     * @return {String}
+     * @param  {number}
+     * @return {string}
      */
     HumanDate.zero = HumanDate.prototype.zero = function(num) {
         return ("0" + num).slice(-2);
@@ -1917,7 +1917,6 @@
         var
             chr    = 0,
             tmp    = 0,
-            als    = '',
             parsed = '',
             cp     = HumanDate.parse(raw),
             hmn    = {},
@@ -2093,8 +2092,8 @@
 
         var
             day   = 0,
-            end   = 0,
-            pos   = 0,
+            it0   = 0,
+            ln0   = 0,
             year  = 0,
             month = 0,
             type  = typeof raw,
@@ -2117,13 +2116,13 @@
 
             // Try to parse the date string manually
             cp  = raw;
-            end = tmpls.length;
+            ln0 = tmpls.length;
 
-            for (pos = 0; pos < end; pos++) {
-                preg = HumanDate.preg(tmpls[pos]);
+            for (it0 = 0; it0 < ln0; it0++) {
+                preg = HumanDate.preg(tmpls[it0]);
 
                 if (cp.match(preg)) {
-                    cp = cp.replace(preg, rplcs[pos]);
+                    cp = cp.replace(preg, rplcs[it0]);
 
                     break;
                 }
@@ -2150,8 +2149,8 @@
      */
     HumanDate.format = HumanDate.prototype.format = function(format) {
         var
-            end    = format.length,
-            pos    = 0,
+            it0    = 0,
+            ln0    = format.length,
             total  = 0,
             found  = '',
             dt     = [],
@@ -2165,8 +2164,8 @@
         }
 
         // Iterate through the string
-        for (pos = 0; pos < end; pos++) {
-            found = format[pos];
+        for (it0 = 0; it0 < ln0; it0++) {
+            found = format[it0];
 
             // 
             if (pregs[found]) {
@@ -2211,13 +2210,13 @@
         }
 
         //
-        for (pos = 0; pos < 3; pos++) {
-            if (dt[pos] === undefined) {
-                dt[pos] = HumanDate['_' + keys[pos]];
+        for (it0 = 0; it0 < 3; it0++) {
+            if (dt[it0] === undefined) {
+                dt[it0] = HumanDate['_' + keys[it0]];
             }
 
-            if (tm[pos] === undefined) {
-                tm[pos] = '00';
+            if (tm[it0] === undefined) {
+                tm[it0] = '00';
             }
         }
 
